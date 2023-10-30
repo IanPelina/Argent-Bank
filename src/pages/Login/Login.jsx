@@ -2,9 +2,9 @@ import Footer from "../../components/Footer/Footer";
 import Form from "../../components/Form/Form";
 import Nav from "../../components/Nav/Nav";
 
-import './SignIn.scss';
+import './Login.scss';
 
-export default function SignIn() {
+export default function Login() {
     return (
         <div>
             <Nav />

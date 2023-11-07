@@ -8,3 +8,11 @@ export const login = createAsyncThunk("login", async ({ email, password }) => {
   });
   return response.data.body;
 });
+
+export const logout = () => {
+    return (dispatch) => {
+      // Réinitialisation du token dans le localStorage
+      localStorage.removeItem('token');
+      dispatch({ type: 'LOGOUT' }); // Déclencher l'action de déconnexion
+    };
+  };

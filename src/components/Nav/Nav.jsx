@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import './Nav.scss';
 import '../../pages/Home/Home.scss';
 
-export default function Nav() {
+export default function Nav({children}) {
     return (
         <nav className="main-nav">
             <Link to="/" className="main-nav-logo">
@@ -21,6 +21,7 @@ export default function Nav() {
                     <i className="fa fa-user-circle"></i>
                     Sign In
                 </Link>
+                {children}
             </div>
         </nav>
     )

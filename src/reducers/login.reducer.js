@@ -33,6 +33,10 @@ const slice = createSlice({
       state.loading = false;
       state.error = "Le mot de passe ou l'email est incorrect.";
     });
+    builder.addCase('LOGOUT', (state, action) => {
+      state.isLoggedIn = false; // Mettre à jour l'état pour indiquer que l'utilisateur est déconnecté
+      state.token = null; // Réinitialiser le token
+    });
   }
 });
 

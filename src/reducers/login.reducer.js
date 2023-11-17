@@ -2,8 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { login } from "../actions/login.action";
 
 const initialState = {
-  isLoggedIn: false,  
-  token: localStorage.getItem('token'),
+  isLogged: !!localStorage.getItem("token"),  
+  token: localStorage.getItem("token"),
   loading: false,
   error: null,
 };
@@ -12,20 +12,23 @@ const slice = createSlice({
   name: "token",
   initialState,
   reducers: {
-    reset: (state, action) => {
+    logout (state, action) {
       state.token = null;
+      state.isLogged = false;
+      localStorage.removeItem("token");
     },
   },
   extraReducers: (builder) => {
     builder.addCase(login.pending, (state, action) => {
+      state.isLogged = false;
       state.loading = true;
       state.error = null;
       state.token = null;
     });
     builder.addCase(login.fulfilled, (state, action) => {
       state.loading = false;
-      state.isLoggedIn = true;
-      localStorage.setItem('token', action.payload.token);
+      state.isLogged = true;
+      action.payload.remember && localStorage.setItem("token", action.payload.token);
       state.token = action.payload.token;
     });
     builder.addCase(login.rejected, (state, action) => {
@@ -33,12 +36,8 @@ const slice = createSlice({
       state.loading = false;
       state.error = "Le mot de passe ou l'email est incorrect.";
     });
-    builder.addCase('LOGOUT', (state, action) => {
-      state.isLoggedIn = false; // Mettre à jour l'état pour indiquer que l'utilisateur est déconnecté
-      state.token = null; // Réinitialiser le token
-    });
   }
 });
 
-export const { reset } = slice.actions;
+export const { logout } = slice.actions;
 export default slice.reducer;

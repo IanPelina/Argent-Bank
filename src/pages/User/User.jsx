@@ -1,55 +1,38 @@
 import Account from "../../components/Account/Account";
 import Footer from '../../components/Footer/Footer';
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from "react";
 
+import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+
+import { useNavigate } from "react-router-dom";
+
+import { updateProfile } from "../../actions/user.action";
 
 import accountData from '../../data/account.json';
 
-import { setUsername } from "../../reducers/user.reducer";
-
 import './User.scss';
-
-import axios from "axios";
 
 export default function User() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-
     const isLogged = useSelector(state => state.loginReducer.isLogged);
     const firstName = useSelector(state => state.userReducer.firstName)
     const lastName = useSelector(state => state.userReducer.lastName)
     const userName = useSelector(state => state.userReducer.userName)
-    // let token = useSelector(state => state.userReducer.token)
+    const token = useSelector((state) => state.loginReducer.token);
+    const [newUserName, setNewUserName] = useState(userName)
 
-    useEffect(() => {
-        !isLogged && navigate("/sign-in");
-    }, [isLogged, navigate]);
-
-   /* async function saveUsername(){
-        const inputUsername = document.getElementById("username").value
-        await axios.put('http://localhost:3001/api/v1/user/profile', {
-            // method: PUT,
-            headers: {
-                'Authorization': 'Bearer ' + token,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                "userName": inputUsername,
-            })
-            })
-            .then(function (response) {
-                console.log(response)
-                return response.json();
-            })
-            .catch(function (error) {
-                console.log("ERROR:" + error + error.status)
-            })
-            dispatch(setUsername({username: inputUsername}))
-        hide("edit")
-    } */
+    function handleSubmit(event) {
+        event.preventDefault();
+        try {
+            dispatch(updateProfile({ token, userName: newUserName }));
+            hide("edit");
+          } catch (error) {
+            console.error(error.message);
+          }
+          return false;
+    }
 
     function hide(name){
         const WelcomeContainer = document.getElementById("headerWelcome")
@@ -70,6 +53,10 @@ export default function User() {
         hide("edit")
     }
 
+    useEffect(() => {
+        !isLogged && navigate("/sign-in");
+    }, [isLogged, navigate]);
+
     return (
         <div>
             <main className="user-main">
@@ -79,12 +66,12 @@ export default function User() {
                         <button className="edit-button" onClick={() => hide("welcome")} >Edit Name</button>
                     </div>
                 </div>
-                <div id="edit-container">
+                <form id="edit-container" onSubmit={handleSubmit}>
                     <div className="header-edit" id="headerEdit">
                         <h1>Edit user info</h1>
                         <div id="header-inputs">
                             <label htmlFor="username"> Username
-                                <input type="text" id="username" defaultValue={userName} />
+                                <input type="text" id="username" value={ newUserName || userName } onChange={ event => setNewUserName(event.target.value)}/>
                             </label>
                             <label htmlFor="firstName"> First name
                                 <input type="text" id="firstName" value={firstName} readOnly />
@@ -94,11 +81,11 @@ export default function User() {
                             </label>
                         </div>
                         <div className="header-edit-buttons">
-                            <button /* onClick={() => saveUsername()}*/>Save</button>
+                            <button type="submit">Save</button>
                             <button onClick={() => undo()}>Cancel</button>
                         </div>
                     </div>
-                </div>
+                </form>
                 {accountData.map(account =>
                     <Account account={account} key={account.id} />
                 )}

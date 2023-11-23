@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 
 import { useEffect } from 'react';
 
-
 import { useDispatch, useSelector } from "react-redux";
 
 import { logout } from "../../reducers/login.reducer";
@@ -16,7 +15,6 @@ import '../../pages/Home/Home.scss';
 export default function Nav() {
 
     const dispatch = useDispatch();
-
     const isLogged = useSelector(state => state.loginReducer.isLogged);
     const token = useSelector((state) => state.loginReducer.token);
     const userName = useSelector((state) => state.userReducer.userName)

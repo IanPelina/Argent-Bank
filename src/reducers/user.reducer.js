@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-import { getProfile } from "../actions/user.action";
-
+import { getProfile, updateProfile } from "../actions/user.action";
 
 const initialState = {
   id: null,
@@ -25,6 +24,11 @@ export const user = createSlice({
     builder.addCase(getProfile.fulfilled, (state, action) => action.payload);
     builder.addCase(getProfile.rejected, (state, action) => {
       console.error("Erreur lors de la récupération du profil de l'utilisateur.")
+    });
+    builder.addCase(updateProfile.pending, (state, action) => initialState);
+    builder.addCase(updateProfile.fulfilled, (state, action) => action.payload);
+    builder.addCase(updateProfile.rejected, (state, action) => {
+      console.error("Erreur lors de la modification du profil de l'utilisateur.")
     });
   }
 });

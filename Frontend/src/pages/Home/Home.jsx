@@ -1,6 +1,6 @@
 import Footer from '../../components/Footer/Footer';
 import Hero from '../../components/Hero/Hero';
-import Features from '../../containers/Features/Features';
+import Features from '../../components/Features/Features';
 
 import './Home.scss';
 

@@ -62,7 +62,7 @@ export default function User() {
             <main className="user-main">
                 <div className="header">
                     <div id="headerWelcome">
-                        <h1>Welcome back<br />{firstName} {lastName} !</h1>
+                        <h1>Welcome back<br />{userName} !</h1>
                         <button className="edit-button" onClick={() => hide("welcome")} >Edit Name</button>
                     </div>
                 </div>

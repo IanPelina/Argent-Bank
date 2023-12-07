@@ -1,4 +1,4 @@
-import navImg from '../../img/argentBankLogo.png';
+import logo from '../../data/nav.json';
 
 import { Link } from 'react-router-dom';
 
@@ -43,7 +43,7 @@ export default function Nav() {
                 <Link to="/" className="main-nav-logo">
                     <img
                         className="main-nav-logo-image"
-                        src={navImg}
+                        src={logo.nav}
                         alt="Argent Bank Logo"
                     />
                     <h1 className="sr-only">Argent Bank</h1>

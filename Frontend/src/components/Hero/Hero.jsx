@@ -2,7 +2,7 @@ import './Hero.scss';
 
 export default function Hero() {
     return (
-        <div className="hero">
+        <div className="hero" style={{backgroundImage: "url('/img/bank-tree.webp')"}}>
             <section className="hero-content">
                 <h2 className="sr-only">Promoted Content</h2>
                 <p className="subtitle">No fees.</p>
